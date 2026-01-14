@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Kolay Sipariş - WhatsApp/Chat Icon -->
+  <g transform="translate(6, 8)">
+    <!-- Chat bubble -->
+    <path d="M8 5 L44 5 Q52 5 52 13 L52 35 Q52 43 44 43 L20 43 L10 53 L10 43 L8 43 Q0 43 0 35 L0 13 Q0 5 8 5" fill="#6B8E5A"/>
+    <!-- Phone icon inside -->
+    <rect x="20" y="15" width="12" height="20" rx="2" fill="#FDF9F3"/>
+    <circle cx="26" cy="31" r="1.5" fill="#6B8E5A"/>
+    <line x1="23" y1="18" x2="29" y2="18" stroke="#6B8E5A" stroke-width="1" stroke-linecap="round"/>
+  </g>
+</svg>

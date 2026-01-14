@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200">
+  <!-- hur-ma.com Icon Set - Health Benefit Icons -->
+  
+  <!-- 1. Sindirim - Digestion -->
+  <g id="digestion" transform="translate(0, 0)">
+    <rect width="100" height="200" fill="#FDF9F3" rx="12"/>
+    <g transform="translate(25, 50)">
+      <!-- Stomach shape -->
+      <path d="M25 10 Q45 10 48 25 Q52 45 40 55 Q30 62 25 75 Q20 62 10 55 Q-2 45 2 25 Q5 10 25 10" 
+            fill="none" stroke="#6B8E5A" stroke-width="3" stroke-linecap="round"/>
+      <!-- Leaf inside -->
+      <path d="M25 30 Q18 40 25 50 Q32 40 25 30" fill="#C4956A" opacity="0.7"/>
+    </g>
+    <text x="50" y="175" text-anchor="middle" font-family="Arial" font-size="9" fill="#666">Sindirim</text>
+  </g>
+  
+  <!-- 2. Kan Şekeri - Blood Sugar -->
+  <g id="blood-sugar" transform="translate(100, 0)">
+    <rect width="100" height="200" fill="#FDF9F3" rx="12"/>
+    <g transform="translate(25, 50)">
+      <!-- Drop shape -->
+      <path d="M25 5 Q5 35 5 50 Q5 70 25 75 Q45 70 45 50 Q45 35 25 5" 
+            fill="none" stroke="#C4956A" stroke-width="3"/>
+      <!-- Balance line -->
+      <line x1="12" y1="50" x2="38" y2="50" stroke="#6B8E5A" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="25" cy="50" r="3" fill="#6B8E5A"/>
+    </g>
+    <text x="150" y="175" text-anchor="middle" font-family="Arial" font-size="9" fill="#666">Kan Şekeri</text>
+  </g>
+  
+  <!-- 3. Kalp Sağlığı - Heart Health -->
+  <g id="heart-health" transform="translate(200, 0)">
+    <rect width="100" height="200" fill="#FDF9F3" rx="12"/>
+    <g transform="translate(25, 50)">
+      <!-- Heart shape -->
+      <path d="M25 70 Q0 45 5 25 Q10 5 25 15 Q40 5 45 25 Q50 45 25 70" 
+            fill="none" stroke="#C4956A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Heartbeat line -->
+      <path d="M8 40 L18 40 L22 30 L28 50 L32 40 L42 40" 
+            stroke="#6B8E5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </g>
+    <text x="250" y="175" text-anchor="middle" font-family="Arial" font-size="9" fill="#666">Kalp Sağlığı</text>
+  </g>
+  
+  <!-- 4. Kemik - Bone Strength -->
+  <g id="bone-strength" transform="translate(300, 0)">
+    <rect width="100" height="200" fill="#FDF9F3" rx="12"/>
+    <g transform="translate(25, 48)">
+      <!-- Bone shape -->
+      <path d="M15 15 Q5 15 5 25 Q5 32 12 32 L12 55 Q5 55 5 62 Q5 72 15 72 Q22 72 22 65 L28 65 Q28 72 35 72 Q45 72 45 62 Q45 55 38 55 L38 32 Q45 32 45 25 Q45 15 35 15 Q28 15 28 22 L22 22 Q22 15 15 15" 
+            fill="none" stroke="#C4956A" stroke-width="2.5"/>
+      <!-- Strength indicator -->
+      <circle cx="25" cy="43" r="8" fill="none" stroke="#6B8E5A" stroke-width="2"/>
+      <path d="M22 43 L25 40 L28 43 L25 46 Z" fill="#6B8E5A"/>
+    </g>
+    <text x="350" y="175" text-anchor="middle" font-family="Arial" font-size="9" fill="#666">Kemik</text>
+  </g>
+  
+  <!-- 5. Enerji - Energy -->
+  <g id="energy" transform="translate(400, 0)">
+    <rect width="100" height="200" fill="#FDF9F3" rx="12"/>
+    <g transform="translate(25, 48)">
+      <!-- Lightning bolt -->
+      <path d="M30 5 L12 38 L22 38 L18 75 L40 35 L28 35 L35 5 Z" 
+            fill="#C4956A" stroke="#A67B52" stroke-width="1"/>
+      <!-- Glow circles -->
+      <circle cx="25" cy="40" r="28" fill="none" stroke="#6B8E5A" stroke-width="1.5" opacity="0.4"/>
+      <circle cx="25" cy="40" r="35" fill="none" stroke="#6B8E5A" stroke-width="1" opacity="0.2"/>
+    </g>
+    <text x="450" y="175" text-anchor="middle" font-family="Arial" font-size="9" fill="#666">Enerji</text>
+  </g>
+</svg>

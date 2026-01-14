@@ -1,11 +1,7 @@
 export const Icons = {
     // Brand Icon (Stylized Hurma)
     Hurma: ({ className = "w-6 h-6" }: { className?: string }) => (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className={className}>
-            <path d="M12 21.5c-4.5 0-8-3.5-8-9 0-5.5 5-9 8-9s8 3.5 8 9c0 5.5-3.5 9-8 9z" />
-            <path d="M12 3.5v18" strokeOpacity="0.5" />
-            <path d="M12 5c3 0 5 3 5 7s-2 7-5 7-5-3-5-7 2-7 5-7z" strokeOpacity="0.5" />
-        </svg>
+        <img src="/hurma-icons/icon-palm.svg" alt="Hurma" className={className} />
     ),
 
     // Shopping Cart (Elegant)
