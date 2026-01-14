@@ -36,7 +36,7 @@ export default function SSSPage() {
         },
         {
             question: 'Kargo ücreti ne kadar?',
-            answer: 'Kargo ücreti sipariş tutarına ve teslimat adresine göre değişmektedir. 500 TL ve üzeri siparişlerde kargo ücretsizdir. Detaylı bilgi için WhatsApp üzerinden bizimle iletişime geçebilirsiniz.'
+            answer: 'Kargo ücreti alıcıya aittir. Tüm siparişler karşı ödemeli olarak gönderilmektedir. Ücret, kargo firmasının tarifesine göre teslimat sırasında alıcı tarafından ödenir.'
         },
         {
             question: 'Ödeme seçenekleri nelerdir?',

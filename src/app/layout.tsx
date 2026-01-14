@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "hur-ma | Premium Hurma",
-  description: "En kaliteli Medine hurmaları. Acve, Mejdul, Amber, Sukkari ve daha fazlası. Türkiye'ye ücretsiz kargo.",
+  description: "En kaliteli Medine hurmaları. Acve, Mejdul, Amber, Sukkari ve daha fazlası. Doğrudan tedarikçiden sofranıza.",
   keywords: "hurma, medine hurması, acve, mejdul, amber, sukkari, mebrum, safavi",
   openGraph: {
     title: "hur-ma | Premium Hurma",
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/hur-ma-logo.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>

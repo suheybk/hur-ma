@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Acve",
+    "description": "En popüler hurma çeşitlerinden biri olan bu hurma, sağlıklı lif, vitamin ve minarel açısından zengindir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Acve Duble",
+    "description": "Büyük boy ve en popüler hurma çeşitlerinden biri olan bu hurma, sağlıklı lif, vitamin ve minarel açısından zengindir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Anber",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Anber Duble",
+    "description": "Büyük boy ve en popüler hurma çeşitlerinden biri olan bu hurma, sağlıklı lif, vitamin ve minarel açısından zengindir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Çekirdeksiz Hurma",
+    "description": "Bu eşsiz, uzun ve ince hurmalar çok hafif tatlı bir lezzet ve çiğnenebilir bir dokuya sahiptir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Mebrum",
+    "description": "Bu eşsiz, uzun ve ince hurmalar çok hafif tatlı bir lezzet ve çiğnenebilir bir dokuya sahiptir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Mebrum no1",
+    "description": "Bu eşsiz, uzun ve ince hurmalar çok hafif tatlı bir lezzet ve çiğnenebilir bir dokuya sahiptir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Mejdul",
+    "description": "Son derece yumuşak, tatlı ve zengin kehribar kırmızısı rengiyle bu hurmalar çok beğenilen türdendir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Mejdul Duble",
+    "description": "Son derece yumuşak, tatlı ve zengin kehribar kırmızısı rengiyle bu hurmalar çok beğenilen türdendir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Mejdul Jumbo",
+    "description": "Son derece yumuşak, tatlı ve zengin kehribar kırmızısı rengiyle bu hurmalar çok beğenilen türdendir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Safavi",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Sukai no1",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Sukai Duble",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Sukai Lüks",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Sukkari Mufettel",
+    "description": "Bu eşsiz, uzun ve ince hurmalar çok hafif tatlı bir lezzet ve çiğnenebilir bir dokuya sahiptir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Beyaz Çikolatalı Bademli Hurma",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Siyah Çikolatalı Bademli Hurma",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Hurma Macunu",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Mebrum",
+    "description": "Bu eşsiz, uzun ve ince hurmalar çok hafif tatlı bir lezzet ve çiğnenebilir bir dokuya sahiptir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Mejdul",
+    "description": "Son derece yumuşak, tatlı ve zengin kehribar kırmızısı rengiyle bu hurmalar çok beğenilen türdendir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Sukai Duble",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Sukkari Rutap",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  }
+]
