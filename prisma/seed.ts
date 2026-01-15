@@ -73,7 +73,8 @@ async function main() {
         unit: product.unit || "KG",
         category: category,
         isActive: true, // extracted products are active
-        order: order
+        order: order,
+        image: product.image
       },
     });
     createdNames.add(normalize(product.name));

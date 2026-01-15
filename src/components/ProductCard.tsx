@@ -39,24 +39,36 @@ export default function ProductCard({ product, onAddToCart, cartQuantity }: Prod
     <div className="product-card group relative">
       <Link href={`/urun/${product.id}`} className="block">
         <div className="relative h-48 sm:h-56 bg-[#FDF8F3] overflow-hidden rounded-t-2xl group-hover:shadow-lg transition-all duration-300">
-          {/* Subtle Background Pattern */}
-          <div className="absolute inset-0 opacity-10 pattern-bg"></div>
-
-          <div className="absolute inset-0 flex items-center justify-center">
-            {/* Main Icon (Stylized Hurma) */}
-            <div className="relative w-24 h-24 transform group-hover:scale-110 transition-transform duration-500">
-              <div className="w-full h-full relative">
-                <img
-                  src="/hurma-icons/icon-palm.svg"
-                  alt="Hurma Icon"
-                  className="w-full h-full object-contain filter drop-shadow-sm opacity-80"
-                />
-              </div>
+          {product.image ? (
+            <div className="relative w-full h-full">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+              />
             </div>
-          </div>
+          ) : (
+            <>
+              {/* Subtle Background Pattern */}
+              <div className="absolute inset-0 opacity-10 pattern-bg"></div>
+
+              <div className="absolute inset-0 flex items-center justify-center">
+                {/* Main Icon (Stylized Hurma) */}
+                <div className="relative w-24 h-24 transform group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-full h-full relative">
+                    <img
+                      src="/hurma-icons/icon-palm.svg"
+                      alt="Hurma Icon"
+                      className="w-full h-full object-contain filter drop-shadow-sm opacity-80"
+                    />
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Category Badge */}
-          <span className={`absolute top-3 left-3 ${badge.bg} text-white text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full shadow-sm`}>
+          <span className={`absolute top-3 left-3 ${badge.bg} text-white text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full shadow-sm z-10`}>
             {badge.text}
           </span>
 

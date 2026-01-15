@@ -5,7 +5,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/Acve.png"
   },
   {
     "name": "Acve Duble",
@@ -13,7 +14,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/acve-duble.png"
   },
   {
     "name": "Anber",
@@ -21,7 +23,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/Anber.png"
   },
   {
     "name": "Anber Duble",
@@ -29,7 +32,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/anber-duble.png"
   },
   {
     "name": "Çekirdeksiz Hurma",
@@ -37,7 +41,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/cekirdeksiz.png"
   },
   {
     "name": "Mebrum",
@@ -45,7 +50,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/Mebrum.png"
   },
   {
     "name": "Mebrum no1",
@@ -53,7 +59,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/Mebrum.png"
   },
   {
     "name": "Mejdul",
@@ -61,7 +68,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/Mejdul.png"
   },
   {
     "name": "Mejdul Duble",
@@ -69,7 +77,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/mejdul-duble.png"
   },
   {
     "name": "Mejdul Jumbo",
@@ -77,7 +86,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/mejdul-jumbo.png"
   },
   {
     "name": "Safavi",
@@ -85,7 +95,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/Safavi.png"
   },
   {
     "name": "Sukai no1",
@@ -101,7 +112,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/Sukaiduble.png"
   },
   {
     "name": "Sukai Lüks",
@@ -117,7 +129,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/sukkari-mufettel.png"
   },
   {
     "name": "Beyaz Çikolatalı Bademli Hurma",
@@ -125,7 +138,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/beyazcikolatalibademlihurma.png"
   },
   {
     "name": "Siyah Çikolatalı Bademli Hurma",
@@ -133,7 +147,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/siyahcikolatalibademlihurma.png"
   },
   {
     "name": "Hurma Macunu",
@@ -141,7 +156,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/hurmamacunu.png"
   },
   {
     "name": "Mebrum",
@@ -149,7 +165,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/Mebrum.png"
   },
   {
     "name": "Mejdul",
@@ -157,7 +174,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/Mejdul.png"
   },
   {
     "name": "Sukai Duble",
@@ -165,7 +183,8 @@
     "price": 0,
     "unit": "KG",
     "isActive": true,
-    "category": "hurma"
+    "category": "hurma",
+    "image": "/products/Sukaiduble.png"
   },
   {
     "name": "Sukkari Rutap",
