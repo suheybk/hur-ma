@@ -1,0 +1,197 @@
+[
+  {
+    "name": "Acve",
+    "description": "En popüler hurma çeşitlerinden biri olan bu hurma, sağlıklı lif, vitamin ve minarel açısından zengindir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/Acve.jpg"
+  },
+  {
+    "name": "Acve Duble",
+    "description": "Büyük boy ve en popüler hurma çeşitlerinden biri olan bu hurma, sağlıklı lif, vitamin ve minarel açısından zengindir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/acve-duble.jpg"
+  },
+  {
+    "name": "Anber",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/Anber.jpg"
+  },
+  {
+    "name": "Anber Duble",
+    "description": "Büyük boy ve en popüler hurma çeşitlerinden biri olan bu hurma, sağlıklı lif, vitamin ve minarel açısından zengindir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/anber-duble.jpg"
+  },
+  {
+    "name": "Çekirdeksiz Hurma",
+    "description": "Bu eşsiz, uzun ve ince hurmalar çok hafif tatlı bir lezzet ve çiğnenebilir bir dokuya sahiptir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/cekirdeksiz.jpg"
+  },
+  {
+    "name": "Mebrum",
+    "description": "Bu eşsiz, uzun ve ince hurmalar çok hafif tatlı bir lezzet ve çiğnenebilir bir dokuya sahiptir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/Mebrum.jpg"
+  },
+  {
+    "name": "Mebrum no1",
+    "description": "Bu eşsiz, uzun ve ince hurmalar çok hafif tatlı bir lezzet ve çiğnenebilir bir dokuya sahiptir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/Mebrum.jpg"
+  },
+  {
+    "name": "Mejdul",
+    "description": "Son derece yumuşak, tatlı ve zengin kehribar kırmızısı rengiyle bu hurmalar çok beğenilen türdendir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/Mejdul.jpg"
+  },
+  {
+    "name": "Mejdul Duble",
+    "description": "Son derece yumuşak, tatlı ve zengin kehribar kırmızısı rengiyle bu hurmalar çok beğenilen türdendir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/mejdul-duble.jpg"
+  },
+  {
+    "name": "Mejdul Jumbo",
+    "description": "Son derece yumuşak, tatlı ve zengin kehribar kırmızısı rengiyle bu hurmalar çok beğenilen türdendir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/mejdul-jumbo.jpg"
+  },
+  {
+    "name": "Safavi",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/Safavi.jpg"
+  },
+  {
+    "name": "Sukai no1",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Sukai Duble",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/Sukaiduble.jpg"
+  },
+  {
+    "name": "Sukai Lüks",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  },
+  {
+    "name": "Sukkari Mufettel",
+    "description": "Bu eşsiz, uzun ve ince hurmalar çok hafif tatlı bir lezzet ve çiğnenebilir bir dokuya sahiptir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/sukkari-mufettel.jpg"
+  },
+  {
+    "name": "Beyaz Çikolatalı Bademli Hurma",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/beyazcikolatalibademlihurma.jpg"
+  },
+  {
+    "name": "Siyah Çikolatalı Bademli Hurma",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/siyahcikolatalibademlihurma.jpg"
+  },
+  {
+    "name": "Hurma Macunu",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/hurmamacunu.jpg"
+  },
+  {
+    "name": "Mebrum",
+    "description": "Bu eşsiz, uzun ve ince hurmalar çok hafif tatlı bir lezzet ve çiğnenebilir bir dokuya sahiptir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/Mebrum.jpg"
+  },
+  {
+    "name": "Mejdul",
+    "description": "Son derece yumuşak, tatlı ve zengin kehribar kırmızısı rengiyle bu hurmalar çok beğenilen türdendir.",
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/Mejdul.jpg"
+  },
+  {
+    "name": "Sukai Duble",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma",
+    "image": "/products/Sukaiduble.jpg"
+  },
+  {
+    "name": "Sukkari Rutap",
+    "description": null,
+    "price": 0,
+    "unit": "KG",
+    "isActive": true,
+    "category": "hurma"
+  }
+]

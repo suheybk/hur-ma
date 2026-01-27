@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Premium Kalite - Quality Badge Icon -->
+  <g transform="translate(7, 5)">
+    <!-- Badge/Star shape -->
+    <path d="M25 2 L30 18 L48 20 L34 33 L38 51 L25 43 L12 51 L16 33 L2 20 L20 18 Z" fill="#C4956A"/>
+    <!-- Inner circle -->
+    <circle cx="25" cy="26" r="12" fill="#FDF9F3"/>
+    <!-- Checkmark -->
+    <path d="M19 26 L23 30 L32 21" stroke="#6B8E5A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Medine Hurma Palmiyesi - Date Palm Icon -->
+  
+  <!-- Palm trunk -->
+  <path d="M30 58 L30 28 Q30 24 32 24 Q34 24 34 28 L34 58" fill="#8B7355"/>
+  <path d="M28 58 L28 35 Q30 32 32 32 Q34 32 36 35 L36 58" fill="#A67B52"/>
+  
+  <!-- Palm fronds - left -->
+  <path d="M32 26 Q10 20 4 8" stroke="#6B8E5A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M32 26 Q8 26 2 18" stroke="#6B8E5A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M32 28 Q12 32 4 28" stroke="#6B8E5A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Palm fronds - right -->
+  <path d="M32 26 Q54 20 60 8" stroke="#6B8E5A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M32 26 Q56 26 62 18" stroke="#6B8E5A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M32 28 Q52 32 60 28" stroke="#6B8E5A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Center frond -->
+  <path d="M32 26 Q32 12 30 4" stroke="#7A9E6B" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M32 26 Q34 12 36 4" stroke="#7A9E6B" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Date clusters -->
+  <g fill="#C4956A">
+    <ellipse cx="22" cy="32" rx="3" ry="4"/>
+    <ellipse cx="26" cy="34" rx="2.5" ry="3.5"/>
+    <ellipse cx="42" cy="32" rx="3" ry="4"/>
+    <ellipse cx="38" cy="34" rx="2.5" ry="3.5"/>
+  </g>
+</svg>

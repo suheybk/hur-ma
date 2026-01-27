@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Sindirim - Digestion Icon -->
+  <g transform="translate(12, 6)">
+    <!-- Stomach shape -->
+    <path d="M20 5 Q38 5 40 18 Q44 38 32 46 Q22 52 18 52 Q8 52 4 42 Q-2 28 4 16 Q10 5 20 5" 
+          fill="none" stroke="#6B8E5A" stroke-width="3" stroke-linecap="round"/>
+    <!-- Leaf/natural element inside -->
+    <path d="M20 22 Q14 32 20 42 Q26 32 20 22" fill="#C4956A" opacity="0.8"/>
+    <path d="M20 26 L20 38" stroke="#A67B52" stroke-width="1" fill="none"/>
+  </g>
+</svg>

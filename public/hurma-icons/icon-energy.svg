@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Enerji - Energy/Lightning Icon -->
+  <g transform="translate(14, 4)">
+    <!-- Lightning bolt -->
+    <path d="M22 0 L6 26 L16 26 L10 56 L32 22 L20 22 L28 0 Z" 
+          fill="#C4956A"/>
+    <!-- Glow effect -->
+    <circle cx="18" cy="28" r="24" fill="none" stroke="#6B8E5A" stroke-width="1.5" opacity="0.3"/>
+  </g>
+</svg>

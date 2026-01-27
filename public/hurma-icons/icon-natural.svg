@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Doğal & Taze - Natural Leaf Icon -->
+  <g transform="translate(12, 7)">
+    <!-- Main leaf -->
+    <path d="M20 50 Q0 30 20 0 Q40 30 20 50" fill="#6B8E5A"/>
+    <!-- Leaf veins -->
+    <path d="M20 8 L20 42" stroke="#5A7D4A" stroke-width="1.5" fill="none"/>
+    <path d="M20 16 L12 11" stroke="#5A7D4A" stroke-width="1" fill="none"/>
+    <path d="M20 16 L28 11" stroke="#5A7D4A" stroke-width="1" fill="none"/>
+    <path d="M20 24 L10 18" stroke="#5A7D4A" stroke-width="1" fill="none"/>
+    <path d="M20 24 L30 18" stroke="#5A7D4A" stroke-width="1" fill="none"/>
+    <path d="M20 32 L12 27" stroke="#5A7D4A" stroke-width="1" fill="none"/>
+    <path d="M20 32 L28 27" stroke="#5A7D4A" stroke-width="1" fill="none"/>
+    <path d="M20 40 L15 36" stroke="#5A7D4A" stroke-width="1" fill="none"/>
+    <path d="M20 40 L25 36" stroke="#5A7D4A" stroke-width="1" fill="none"/>
+  </g>
+</svg>

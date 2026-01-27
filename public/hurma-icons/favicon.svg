@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- hur-ma.com Favicon - Premium Date Fruit -->
+  <!-- Designed for 16x16, 32x32, 64x64, 128x128, 256x256, 512x512 -->
+  
+  <defs>
+    <!-- Gradient for date fruit -->
+    <linearGradient id="dateGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4A574"/>
+      <stop offset="50%" style="stop-color:#C4956A"/>
+      <stop offset="100%" style="stop-color:#A67B52"/>
+    </linearGradient>
+    
+    <!-- Leaf gradient -->
+    <linearGradient id="leafGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7A9E6B"/>
+      <stop offset="100%" style="stop-color:#5A7D4A"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle (optional - can be removed for transparent) -->
+  <!-- <circle cx="256" cy="256" r="250" fill="#FDF9F3"/> -->
+  
+  <!-- Main date fruit body -->
+  <ellipse cx="256" cy="290" rx="120" ry="160" fill="url(#dateGradient)"/>
+  
+  <!-- Date fruit highlight -->
+  <ellipse cx="220" cy="250" rx="35" ry="70" fill="#E0B88A" opacity="0.4"/>
+  
+  <!-- Date fruit texture lines -->
+  <path d="M180 200 Q256 180 332 200" stroke="#A67B52" stroke-width="3" fill="none" opacity="0.3"/>
+  <path d="M170 260 Q256 240 342 260" stroke="#A67B52" stroke-width="3" fill="none" opacity="0.3"/>
+  <path d="M165 320 Q256 300 347 320" stroke="#A67B52" stroke-width="3" fill="none" opacity="0.3"/>
+  <path d="M175 380 Q256 360 337 380" stroke="#A67B52" stroke-width="3" fill="none" opacity="0.3"/>
+  
+  <!-- Stem -->
+  <rect x="248" y="100" width="16" height="40" rx="4" fill="#8B7355"/>
+  
+  <!-- Left leaf -->
+  <path d="M200 120 Q170 80 200 50 Q215 75 256 85 Q230 100 200 120" fill="url(#leafGradient)"/>
+  <path d="M210 95 Q225 80 240 82" stroke="#5A7D4A" stroke-width="2" fill="none"/>
+  
+  <!-- Right leaf -->
+  <path d="M312 120 Q342 80 312 50 Q297 75 256 85 Q282 100 312 120" fill="url(#leafGradient)"/>
+  <path d="M302 95 Q287 80 272 82" stroke="#5A7D4A" stroke-width="2" fill="none"/>
+</svg>

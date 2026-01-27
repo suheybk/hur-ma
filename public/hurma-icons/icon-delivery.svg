@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Hızlı Kargo - Fast Delivery Icon -->
+  <g transform="translate(6, 12)">
+    <!-- Box -->
+    <rect x="15" y="15" width="35" height="30" rx="3" fill="#C4956A"/>
+    <path d="M15 28 L50 28" stroke="#A67B52" stroke-width="1.5"/>
+    <path d="M32 15 L32 28" stroke="#A67B52" stroke-width="1.5"/>
+    <!-- Tape cross on top -->
+    <rect x="28" y="15" width="8" height="13" fill="#D4A574"/>
+    
+    <!-- Speed lines -->
+    <line x1="2" y1="22" x2="10" y2="22" stroke="#6B8E5A" stroke-width="2" stroke-linecap="round"/>
+    <line x1="4" y1="30" x2="12" y2="30" stroke="#6B8E5A" stroke-width="2" stroke-linecap="round"/>
+    <line x1="2" y1="38" x2="10" y2="38" stroke="#6B8E5A" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>

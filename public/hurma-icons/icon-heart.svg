@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Kalp Sağlığı - Heart Health Icon -->
+  <g transform="translate(8, 8)">
+    <!-- Heart shape -->
+    <path d="M24 45 Q0 25 4 12 Q8 0 24 8 Q40 0 44 12 Q48 25 24 45" 
+          fill="none" stroke="#C4956A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Heartbeat line -->
+    <path d="M6 24 L16 24 L20 16 L28 32 L32 24 L42 24" 
+          stroke="#6B8E5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+</svg>

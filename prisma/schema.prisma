@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  unit        String   @default("KG")
+  category    String   @default("hurma")
+  image       String?
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orderItems  OrderItem[]
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model SiteSettings {
+  id           String  @id @default("settings")
+  whatsapp     String  @default("+905334862899")
+  email        String?
+  address      String?
+  aboutText    String?
+  heroTitle    String  @default("Premium Hurma")
+  heroSubtitle String?
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  customerName String
+  customerPhone String
+  address     String
+  city        String
+  district    String
+  receiptPath String?
+  status      String      @default("PENDING") // PENDING, COMPLETED, CANCELLED
+  totalAmount Float
+  items       OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float   // Snapshot of price at time of order
+}

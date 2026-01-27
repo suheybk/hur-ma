@@ -1,0 +1,22 @@
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- hur text -->
+  <text x="10" y="42" font-family="Playfair Display, Georgia, serif" font-size="36" font-weight="700" fill="#2C1810">hur</text>
+  
+  <!-- Hurma (date) icon -->
+  <g transform="translate(78, 8)">
+    <!-- Main date fruit -->
+    <ellipse cx="16" cy="22" rx="10" ry="14" fill="#D4A574"/>
+    <ellipse cx="16" cy="22" rx="7" ry="11" fill="#B8956A"/>
+    <!-- Highlight -->
+    <ellipse cx="12" cy="16" rx="3" ry="4" fill="#E8C9A8" opacity="0.6"/>
+    <!-- Stem -->
+    <path d="M16 8 L16 12 Q13 10 11 6 Q13 9 16 8 Z" fill="#4A3728"/>
+    <path d="M16 8 L16 12 Q19 10 21 6 Q19 9 16 8 Z" fill="#4A3728"/>
+    <!-- Leaves -->
+    <path d="M16 6 Q22 0 28 3 Q22 6 16 10 Z" fill="#6B8E23" opacity="0.8"/>
+    <path d="M16 6 Q10 0 4 3 Q10 6 16 10 Z" fill="#6B8E23" opacity="0.8"/>
+  </g>
+  
+  <!-- ma text -->
+  <text x="115" y="42" font-family="Playfair Display, Georgia, serif" font-size="36" font-weight="700" fill="#2C1810">ma</text>
+</svg>
