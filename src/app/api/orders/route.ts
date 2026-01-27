@@ -13,42 +13,71 @@ export async function POST(request: Request) {
         const city = formData.get('city') as string;
         const district = formData.get('district') as string;
         const address = formData.get('address') as string;
-        const totalAmount = parseFloat(formData.get('totalAmount') as string);
+        const totalAmountStr = formData.get('totalAmount') as string;
         const itemsJson = formData.get('items') as string;
-        const receiptFile = formData.get('receipt') as File | null;
 
-        const items = JSON.parse(itemsJson);
+        // Handle receipt file - check if it's a File object
+        const receiptEntry = formData.get('receipt');
+        const receiptFile = (receiptEntry instanceof File) ? receiptEntry : null;
+
+        // Validation
+        if (!itemsJson) {
+            return NextResponse.json({ error: 'Sepet verisi eksik' }, { status: 400 });
+        }
+
+        const totalAmount = parseFloat(totalAmountStr);
+        if (isNaN(totalAmount)) {
+            return NextResponse.json({ error: 'Geçersiz toplam tutar' }, { status: 400 });
+        }
+
+        let items;
+        try {
+            items = JSON.parse(itemsJson);
+        } catch (e) {
+            return NextResponse.json({ error: 'Geçersiz sepet formatı' }, { status: 400 });
+        }
 
         let receiptPath = null;
 
         // Handle File Upload
-        if (receiptFile) {
-            const bytes = await receiptFile.arrayBuffer();
-            const buffer = Buffer.from(bytes);
+        // Check size > 0 to ensure we don't process empty file inputs that some browsers might send
+        if (receiptFile && receiptFile.size > 0) {
+            try {
+                const bytes = await receiptFile.arrayBuffer();
+                const buffer = Buffer.from(bytes);
 
-            // Create unique filename
-            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-            const filename = uniqueSuffix + '-' + receiptFile.name.replace(/\s/g, '-');
+                // Create unique filename
+                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+                // Sanitize filename to avoid filesystem issues
+                const originalName = receiptFile.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+                const filename = uniqueSuffix + '-' + (originalName || 'receipt');
 
-            const uploadDir = join(process.cwd(), 'public', 'uploads', 'receipts');
+                const uploadDir = join(process.cwd(), 'public', 'uploads', 'receipts');
 
-            // Ensure directory exists
-            await mkdir(uploadDir, { recursive: true });
+                // Ensure directory exists
+                await mkdir(uploadDir, { recursive: true });
 
-            const filePath = join(uploadDir, filename);
-            await writeFile(filePath, buffer);
+                const filePath = join(uploadDir, filename);
+                await writeFile(filePath, buffer);
 
-            receiptPath = `/uploads/receipts/${filename}`;
+                receiptPath = `/uploads/receipts/${filename}`;
+            } catch (fileError) {
+                console.error('File Upload Error:', fileError);
+                // If file upload fails, we log it but maybe we shouldn't fail the whole order if it's optional?
+                // However, if the user explicitly uploaded it, they expect it to work.
+                // Let's return error so they know something went wrong.
+                throw new Error('Dosya yüklenirken hata oluştu.');
+            }
         }
 
         // Create Order in DB
         const order = await prisma.order.create({
             data: {
-                customerName: name,
-                customerPhone: phone,
-                address,
-                city,
-                district,
+                customerName: name || '',
+                customerPhone: phone || '',
+                address: address || '',
+                city: city || '',
+                district: district || '',
                 totalAmount,
                 receiptPath,
                 status: 'PENDING',
@@ -68,7 +97,10 @@ export async function POST(request: Request) {
         return NextResponse.json({ success: true, orderId: order.id, orderNo });
 
     } catch (error) {
-        console.error('Order Error:', error);
-        return NextResponse.json({ error: 'Sipariş oluşturulurken bir hata oluştu' }, { status: 500 });
+        console.error('Order Error Details:', error);
+        return NextResponse.json({
+            error: 'Sipariş oluşturulurken bir hata oluştu',
+            details: error instanceof Error ? error.message : String(error)
+        }, { status: 500 });
     }
 }
