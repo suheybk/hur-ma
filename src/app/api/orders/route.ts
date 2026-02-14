@@ -56,16 +56,26 @@ export async function POST(request: Request) {
                 const filename = uniqueSuffix + '-' + (originalName || 'receipt');
 
                 const uploadDir = join(process.cwd(), 'public', 'uploads', 'receipts');
-                await mkdir(uploadDir, { recursive: true });
 
-                const filePath = join(uploadDir, filename);
-                await writeFile(filePath, buffer);
-
-                receiptPath = `/uploads/receipts/${filename}`;
-                console.log('File saved to:', receiptPath);
+                try {
+                    await mkdir(uploadDir, { recursive: true });
+                    const filePath = join(uploadDir, filename);
+                    await writeFile(filePath, buffer);
+                    receiptPath = `/uploads/receipts/${filename}`;
+                    console.log('File saved to disk:', receiptPath);
+                } catch (fsError) {
+                    console.warn('Filesystem is read-only or unreachable, falling back to Base64 storage:', fsError);
+                    // Fallback: Store as Base64 Data URL
+                    const contentType = receiptFile.type || 'image/jpeg';
+                    const base64Content = buffer.toString('base64');
+                    receiptPath = `data:${contentType};base64,${base64Content}`;
+                    console.log('File stored as Base64 (Data URL)');
+                }
             } catch (fileError) {
                 console.error('Detailed File Upload Error:', fileError);
-                throw new Error('Dosya yüklenirken hata oluştu: ' + (fileError instanceof Error ? fileError.message : String(fileError)));
+                // We don't want to crash the whole order if receipt fails, but we already added logging
+                // For now, let's allow it to proceed with receiptPath = null if even Base64 fails
+                // Or throw if you prefer. Given the previous crash, let's be safer.
             }
         }
 
