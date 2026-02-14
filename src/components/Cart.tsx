@@ -68,7 +68,7 @@ export default function Cart({
     }
   }, [isOpen]);
 
-  const generateWhatsAppMessage = (orderId?: string) => {
+  const generateWhatsAppMessage = (orderId?: string, customerDetails?: { name: string; phone: string; address: string; city: string; district: string }) => {
     if (items.length === 0) return '';
 
     let message = 'Merhaba, aşağıdaki ürünleri sipariş etmek istiyorum:\n\n';
@@ -91,10 +91,18 @@ export default function Cart({
 
     if (orderId) {
       message += `Sipariş No: #${orderId}\n`;
-      message += `Sipariş web sitesi üzerinden oluşturuldu.\n`;
+      message += `Sipariş web sitesi üzerinden oluşturuldu.\n\n`;
     }
 
-    message += `Lütfen sipariş detayları ve kargo bilgisi için dönüş yapınız.`;
+    if (customerDetails) {
+      message += `*Müşteri Bilgileri:*\n`;
+      message += `Ad Soyad: ${customerDetails.name}\n`;
+      message += `Telefon: ${customerDetails.phone}\n`;
+      message += `Adres: ${customerDetails.address}\n`;
+      message += `İlçe/İl: ${customerDetails.district} / ${customerDetails.city}\n`;
+    }
+
+    message += `\nLütfen sipariş detayları ve kargo bilgisi için dönüş yapınız.`;
 
     return encodeURIComponent(message);
   };
@@ -120,22 +128,42 @@ export default function Cart({
       });
 
       if (!response.ok) {
-        throw new Error('Sipariş oluşturulamadı');
+        let errorMessage = 'Sipariş oluşturulamadı';
+        try {
+          const errorData = await response.json();
+          if (errorData.details) {
+            errorMessage += `: ${errorData.details}`;
+          } else if (errorData.error) {
+            errorMessage = errorData.error;
+          }
+        } catch (e) {
+          // Fallback to default message if JSON parsing fails
+        }
+        throw new Error(errorMessage);
       }
 
       const order = await response.json();
+
+      // Get values for WhatsApp message
+      const customerDetails = {
+        name: formData.get('name') as string,
+        phone: formData.get('phone') as string,
+        address: formData.get('address') as string,
+        city: formData.get('city') as string,
+        district: formData.get('district') as string,
+      };
 
       // Clear cart and close
       onClear();
       onClose();
 
       // Redirect to WhatsApp
-      const message = generateWhatsAppMessage(order.orderNo);
+      const message = generateWhatsAppMessage(order.orderNo, customerDetails);
       const phone = '905334862899';
       window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
 
     } catch (error) {
-      alert('Bir hata oluştu. Lütfen tekrar deneyiniz.');
+      alert(error instanceof Error ? error.message : 'Bir hata oluştu. Lütfen tekrar deneyiniz.');
       console.error(error);
     } finally {
       setIsSubmitting(false);
