@@ -37,70 +37,76 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Geçersiz sepet formatı' }, { status: 400 });
         }
 
+        console.log('Order POST Request Received');
+        console.log('Customer:', { name, phone, city, district, address });
+        console.log('Total Amount:', totalAmount);
+        console.log('Items count:', items?.length);
+
         let receiptPath = null;
 
         // Handle File Upload
-        // Check size > 0 to ensure we don't process empty file inputs that some browsers might send
         if (receiptFile && receiptFile.size > 0) {
             try {
+                console.log('Processing receipt file:', receiptFile.name, receiptFile.size);
                 const bytes = await receiptFile.arrayBuffer();
                 const buffer = Buffer.from(bytes);
 
-                // Create unique filename
                 const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-                // Sanitize filename to avoid filesystem issues
                 const originalName = receiptFile.name.replace(/[^a-zA-Z0-9.-]/g, '_');
                 const filename = uniqueSuffix + '-' + (originalName || 'receipt');
 
                 const uploadDir = join(process.cwd(), 'public', 'uploads', 'receipts');
-
-                // Ensure directory exists
                 await mkdir(uploadDir, { recursive: true });
 
                 const filePath = join(uploadDir, filename);
                 await writeFile(filePath, buffer);
 
                 receiptPath = `/uploads/receipts/${filename}`;
+                console.log('File saved to:', receiptPath);
             } catch (fileError) {
-                console.error('File Upload Error:', fileError);
-                // If file upload fails, we log it but maybe we shouldn't fail the whole order if it's optional?
-                // However, if the user explicitly uploaded it, they expect it to work.
-                // Let's return error so they know something went wrong.
-                throw new Error('Dosya yüklenirken hata oluştu.');
+                console.error('Detailed File Upload Error:', fileError);
+                throw new Error('Dosya yüklenirken hata oluştu: ' + (fileError instanceof Error ? fileError.message : String(fileError)));
             }
         }
 
         // Create Order in DB
-        const order = await prisma.order.create({
-            data: {
-                customerName: name || '',
-                customerPhone: phone || '',
-                address: address || '',
-                city: city || '',
-                district: district || '',
-                totalAmount,
-                receiptPath,
-                status: 'PENDING',
-                items: {
-                    create: items.map((item: any) => ({
-                        productId: item.productId,
-                        quantity: item.quantity,
-                        price: item.price
-                    }))
+        console.log('Creating order in database...');
+        try {
+            const order = await prisma.order.create({
+                data: {
+                    customerName: name || '',
+                    customerPhone: phone || '',
+                    address: address || '',
+                    city: city || '',
+                    district: district || '',
+                    totalAmount,
+                    receiptPath,
+                    status: 'PENDING',
+                    items: {
+                        create: items.map((item: any) => ({
+                            productId: item.productId,
+                            quantity: item.quantity,
+                            price: item.price
+                        }))
+                    }
                 }
-            }
-        });
+            });
 
-        // Provide a shorter order number for user reference (last 6 chars of ID)
-        const orderNo = order.id.slice(-6).toUpperCase();
+            console.log('Order created successfully:', order.id);
+            const orderNo = order.id.slice(-6).toUpperCase();
+            return NextResponse.json({ success: true, orderId: order.id, orderNo });
 
-        return NextResponse.json({ success: true, orderId: order.id, orderNo });
+        } catch (prismaError) {
+            console.error('Detailed Prisma Error:', prismaError);
+            throw prismaError;
+        }
 
     } catch (error) {
         console.error('Order Error Details:', error);
         return NextResponse.json({
             error: 'Sipariş oluşturulurken bir hata oluştu',
-            details: error instanceof Error ? error.message : String(error)
+            details: error instanceof Error ? error.message : String(error),
+            stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined
         }, { status: 500 });
     }
 }
