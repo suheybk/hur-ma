@@ -1,9 +1,19 @@
 import { PrismaClient } from '@prisma/client'
+import { PrismaD1 } from '@prisma/adapter-d1'
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined
+// Define the Cloudflare D1Database type if it's not globally available
+declare global {
+  interface D1Database { }
 }
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient()
+export const createPrismaClient = (db?: any) => {
+  if (db) {
+    const adapter = new PrismaD1(db)
+    // @ts-ignore - adapter is valid with previewFeatures = ["driverAdapters"]
+    return new PrismaClient({ adapter })
+  }
+  return new PrismaClient()
+}
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+// Keep the default export for local development/scripts
+export const prisma = new PrismaClient()

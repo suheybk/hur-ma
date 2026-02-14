@@ -1,10 +1,16 @@
-import { prisma } from '@/lib/prisma';
+import { createPrismaClient } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
+import { getRequestContext } from '@cloudflare/next-on-pages';
+
+export const runtime = 'edge';
 
 export async function POST(request: Request) {
     try {
+        const { env } = (getRequestContext() as any);
+        const prisma = createPrismaClient(env.DB);
+
         const formData = await request.formData();
 
         // Extract fields

@@ -1,11 +1,17 @@
-import { prisma } from '@/lib/prisma';
+import { createPrismaClient } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { getRequestContext } from '@cloudflare/next-on-pages';
+
+export const runtime = 'edge';
 
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { env } = (getRequestContext() as any);
+    const prisma = createPrismaClient(env.DB);
+
     const { id } = await params;
     const product = await prisma.product.findUnique({
       where: { id },
@@ -25,8 +31,11 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { env } = (getRequestContext() as any);
+    const prisma = createPrismaClient(env.DB);
+
     const { id } = await params;
-    const body = await request.json();
+    const body = await request.json() as any;
     const product = await prisma.product.update({
       where: { id },
       data: {
@@ -52,6 +61,9 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { env } = (getRequestContext() as any);
+    const prisma = createPrismaClient(env.DB);
+
     const { id } = await params;
     await prisma.product.delete({
       where: { id },

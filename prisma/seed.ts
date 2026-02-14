@@ -42,7 +42,9 @@ async function main() {
     console.error('Could not load products.json, falling back to empty list', e);
   }
 
-  // Delete existing products
+  // Delete existing products and orders to prevent FK errors
+  await prisma.orderItem.deleteMany();
+  await prisma.order.deleteMany();
   await prisma.product.deleteMany();
 
   // Helper to normalize strings for matching

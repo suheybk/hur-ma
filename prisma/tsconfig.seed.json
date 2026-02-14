@@ -3,7 +3,10 @@
     "compilerOptions": {
         "module": "CommonJS",
         "moduleResolution": "node",
-        "noEmit": false
+        "noEmit": false,
+        "types": [
+            "node"
+        ]
     },
     "ts-node": {
         "compilerOptions": {

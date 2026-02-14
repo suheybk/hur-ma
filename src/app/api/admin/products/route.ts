@@ -1,8 +1,14 @@
-import { prisma } from '@/lib/prisma';
+import { createPrismaClient } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { getRequestContext } from '@cloudflare/next-on-pages';
+
+export const runtime = 'edge';
 
 export async function GET() {
   try {
+    const { env } = (getRequestContext() as any);
+    const prisma = createPrismaClient(env.DB);
+
     const products = await prisma.product.findMany({
       orderBy: { order: 'asc' },
     });
@@ -15,7 +21,10 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const { env } = (getRequestContext() as any);
+    const prisma = createPrismaClient(env.DB);
+
+    const body = await request.json() as any;
     const product = await prisma.product.create({
       data: {
         name: body.name,
