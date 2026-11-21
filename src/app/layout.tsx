@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://hur-ma.com"),
   title: "hur-ma | Premium Hurma",
   description: "En kaliteli Medine hurmaları. Acve, Mejdul, Amber, Sukkari ve daha fazlası. Doğrudan tedarikçiden sofranıza.",
   keywords: "hurma, medine hurması, acve, mejdul, amber, sukkari, mebrum, safavi",

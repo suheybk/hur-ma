@@ -2,24 +2,18 @@
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { useState, useEffect } from 'react';
-import { CartItem } from '@/lib/types';
+import Cart from '@/components/Cart';
+import { useCart } from '@/lib/useCart';
 
 export default function HakkimizdaPage() {
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const cart = useCart();
 
-    useEffect(() => {
-        const savedCart = localStorage.getItem('hur-ma-cart');
-        if (savedCart) {
-            setCartItems(JSON.parse(savedCart));
-        }
-    }, []);
 
     const benefits = [
         {
             icon: '💪',
             title: 'Enerji Kaynağı',
-            desc: 'Hurma, doğal şekerleri sayesinde anında enerji sağlar. Sporculalar ve aktif yaşam sürenler için mükemmel bir atıştırmalıktır.'
+            desc: 'Hurma, doğal şekerleri sayesinde anında enerji sağlar. Sporcular ve aktif yaşam sürenler için mükemmel bir atıştırmalıktır.'
         },
         {
             icon: '🫀',
@@ -50,7 +44,15 @@ export default function HakkimizdaPage() {
 
     return (
         <main className="min-h-screen bg-[#FDF8F3]">
-            <Header cartItems={cartItems} onCartClick={() => { }} />
+            <Header cartItems={cart.cartItems} onCartClick={cart.openCart} />
+            <Cart
+                isOpen={cart.isCartOpen}
+                onClose={cart.closeCart}
+                items={cart.cartItems}
+                onUpdateQuantity={cart.updateQuantity}
+                onRemove={cart.removeFromCart}
+                onClear={cart.clearCart}
+            />
 
             {/* Hero */}
             <section className="pt-32 pb-16 px-4 bg-gradient-to-br from-[#2C1810] to-[#4A3728] text-white">

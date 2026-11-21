@@ -38,6 +38,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/oyun" className="text-[#E8C9A8] hover:text-[#D4A574] transition-colors text-sm">
+                  Fesîle Oyunu
+                </Link>
+              </li>
+              <li>
                 <Link href="/hakkimizda" className="text-[#E8C9A8] hover:text-[#D4A574] transition-colors text-sm">
                   Hakkımızda
                 </Link>
