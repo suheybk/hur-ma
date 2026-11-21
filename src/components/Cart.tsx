@@ -118,8 +118,8 @@ export default function Cart({
       }))));
 
       formData.append('totalAmount', total.toString());
-      if (discountCode) {
-        formData.append('discountCode', discountCode);
+      if (appliedDiscount > 0 && discountCode.trim()) {
+        formData.append('discountCode', discountCode.trim());
       }
 
       const response = await fetch('/api/orders', {
@@ -130,7 +130,7 @@ export default function Cart({
       if (!response.ok) {
         let errorMessage = 'Sipariş oluşturulamadı';
         try {
-          const errorData = await response.json();
+          const errorData = (await response.json()) as { error?: string; details?: string };
           if (errorData.details) {
             errorMessage += `: ${errorData.details}`;
           } else if (errorData.error) {
@@ -142,7 +142,7 @@ export default function Cart({
         throw new Error(errorMessage);
       }
 
-      const order = await response.json();
+      const order = (await response.json()) as { orderNo?: string; orderId?: string };
 
       // Get values for WhatsApp message
       const customerDetails = {

@@ -26,7 +26,7 @@ yarn-error.log*
 .env*.local
 .env
 
-# Vercel
+# Cloudflare next-on-pages derleme çıktısı (.vercel/output)
 .vercel
 
 # TypeScript
@@ -36,3 +36,6 @@ next-env.d.ts
 # Prisma
 prisma/dev.db
 prisma/dev.db-journal
+
+# Cloudflare yerel durum (wrangler --local D1 vb.)
+.wrangler

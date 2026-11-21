@@ -1,13 +1,16 @@
 import { createPrismaClient } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { getRequestContext } from '@cloudflare/next-on-pages';
+import { requireAdmin } from '@/lib/adminAuth';
+import { urunVerisi } from '@/lib/productValidation';
 
 export const runtime = 'edge';
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+type Baglam = { params: Promise<{ id: string }> };
+
+export async function GET(request: Request, { params }: Baglam) {
+  const yetkisiz = await requireAdmin();
+  if (yetkisiz) return yetkisiz;
   try {
     const { env } = (getRequestContext() as any);
     const prisma = createPrismaClient(env.DB);
@@ -26,29 +29,18 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PUT(request: Request, { params }: Baglam) {
+  const yetkisiz = await requireAdmin();
+  if (yetkisiz) return yetkisiz;
   try {
+    const v = urunVerisi(await request.json().catch(() => null));
+    if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 });
+
     const { env } = (getRequestContext() as any);
     const prisma = createPrismaClient(env.DB);
 
     const { id } = await params;
-    const body = await request.json() as any;
-    const product = await prisma.product.update({
-      where: { id },
-      data: {
-        name: body.name,
-        description: body.description || null,
-        price: body.price,
-        unit: body.unit || 'KG',
-        category: body.category || 'klasik',
-        image: body.image || null,
-        isActive: body.isActive ?? true,
-        order: body.order || 0,
-      },
-    });
+    const product = await prisma.product.update({ where: { id }, data: v.data });
     return NextResponse.json(product);
   } catch (error) {
     console.error('Error updating product:', error);
@@ -56,10 +48,9 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function DELETE(request: Request, { params }: Baglam) {
+  const yetkisiz = await requireAdmin();
+  if (yetkisiz) return yetkisiz;
   try {
     const { env } = (getRequestContext() as any);
     const prisma = createPrismaClient(env.DB);

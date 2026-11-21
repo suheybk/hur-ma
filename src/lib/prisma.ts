@@ -15,5 +15,6 @@ export const createPrismaClient = (db?: any) => {
   return new PrismaClient()
 }
 
-// Keep the default export for local development/scripts
-export const prisma = new PrismaClient()
+// Not: modül düzeyinde `new PrismaClient()` oluşturulmaz; edge ortamında sürücü
+// bağdaştırıcısı olmadan istemci kurulamaz ve bu dosyayı içe aktaran tüm rotalar
+// derlemede çöker. Her istek createPrismaClient(env.DB) kullanır.

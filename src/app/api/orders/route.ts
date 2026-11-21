@@ -1,10 +1,15 @@
 import { createPrismaClient } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
 import { getRequestContext } from '@cloudflare/next-on-pages';
+import { DISCOUNT_CODES } from '@/lib/discounts';
 
 export const runtime = 'edge';
+
+// Dekont D1'e base64 olarak yazılır; D1 satır sınırı 2 MB olduğundan ham dosya en çok ~1,4 MB.
+const EN_BUYUK_DEKONT = 1.4 * 1024 * 1024;
+const DEKONT_TURLERI = /^(image\/(jpeg|png|webp|heic|heif)|application\/pdf)$/;
+const metin = (v: FormDataEntryValue | null, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+const kurus = (n: number) => Math.round(n * 100) / 100;
 
 export async function POST(request: Request) {
     try {
@@ -14,19 +19,31 @@ export async function POST(request: Request) {
         const formData = await request.formData();
 
         // Extract fields
-        const name = formData.get('name') as string;
-        const phone = formData.get('phone') as string;
-        const city = formData.get('city') as string;
-        const district = formData.get('district') as string;
-        const address = formData.get('address') as string;
-        const totalAmountStr = formData.get('totalAmount') as string;
-        const itemsJson = formData.get('items') as string;
+        const name = metin(formData.get('name'), 120);
+        const phone = metin(formData.get('phone'), 30);
+        const city = metin(formData.get('city'), 60);
+        const district = metin(formData.get('district'), 60);
+        const address = metin(formData.get('address'), 500);
+        const totalAmountStr = metin(formData.get('totalAmount'), 30);
+        const itemsJson = metin(formData.get('items'), 20000);
+        const discountCode = metin(formData.get('discountCode'), 40);
 
         // Handle receipt file - check if it's a File object
         const receiptEntry = formData.get('receipt');
         const receiptFile = (receiptEntry instanceof File) ? receiptEntry : null;
 
         // Validation
+        if (!name || !phone || !address || !city) {
+            return NextResponse.json({ error: 'Ad, telefon, il ve adres zorunludur' }, { status: 400 });
+        }
+        if (receiptFile && receiptFile.size > 0) {
+            if (receiptFile.size > EN_BUYUK_DEKONT) {
+                return NextResponse.json({ error: 'Dekont dosyası en fazla 1,4 MB olabilir. Lütfen daha küçük bir fotoğraf ya da ekran görüntüsü yükleyin.' }, { status: 400 });
+            }
+            if (!DEKONT_TURLERI.test(receiptFile.type)) {
+                return NextResponse.json({ error: 'Dekont JPG, PNG, WEBP, HEIC ya da PDF olmalı' }, { status: 400 });
+            }
+        }
         if (!itemsJson) {
             return NextResponse.json({ error: 'Sepet verisi eksik' }, { status: 400 });
         }
@@ -43,46 +60,50 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Geçersiz sepet formatı' }, { status: 400 });
         }
 
-        console.log('Order POST Request Received');
-        console.log('Customer:', { name, phone, city, district, address });
-        console.log('Total Amount:', totalAmount);
-        console.log('Items count:', items?.length);
-
-        let receiptPath = null;
-
-        // Handle File Upload
-        if (receiptFile && receiptFile.size > 0) {
-            try {
-                console.log('Processing receipt file:', receiptFile.name, receiptFile.size);
-                const bytes = await receiptFile.arrayBuffer();
-                const buffer = Buffer.from(bytes);
-
-                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-                const originalName = receiptFile.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-                const filename = uniqueSuffix + '-' + (originalName || 'receipt');
-
-                const uploadDir = join(process.cwd(), 'public', 'uploads', 'receipts');
-
-                try {
-                    await mkdir(uploadDir, { recursive: true });
-                    const filePath = join(uploadDir, filename);
-                    await writeFile(filePath, buffer);
-                    receiptPath = `/uploads/receipts/${filename}`;
-                    console.log('File saved to disk:', receiptPath);
-                } catch (fsError) {
-                    console.warn('Filesystem is read-only or unreachable, falling back to Base64 storage:', fsError);
-                    // Fallback: Store as Base64 Data URL
-                    const contentType = receiptFile.type || 'image/jpeg';
-                    const base64Content = buffer.toString('base64');
-                    receiptPath = `data:${contentType};base64,${base64Content}`;
-                    console.log('File stored as Base64 (Data URL)');
-                }
-            } catch (fileError) {
-                console.error('Detailed File Upload Error:', fileError);
-                // We don't want to crash the whole order if receipt fails, but we already added logging
-                // For now, let's allow it to proceed with receiptPath = null if even Base64 fails
-                // Or throw if you prefer. Given the previous crash, let's be safer.
+        // Fiyatlar tarayıcıya güvenilmez: ürün fiyatları veritabanından alınır,
+        // toplam sunucuda hesaplanır.
+        if (!Array.isArray(items) || items.length === 0 || items.length > 100) {
+            return NextResponse.json({ error: 'Geçersiz sepet' }, { status: 400 });
+        }
+        const satirlar: { productId: string; quantity: number }[] = [];
+        for (const it of items) {
+            const productId = typeof it?.productId === 'string' ? it.productId : '';
+            const quantity = Number(it?.quantity);
+            if (!productId || !Number.isInteger(quantity) || quantity < 1 || quantity > 1000) {
+                return NextResponse.json({ error: 'Geçersiz sepet satırı' }, { status: 400 });
             }
+            satirlar.push({ productId, quantity });
+        }
+        const idler = [...new Set(satirlar.map((x) => x.productId))];
+        const urunler = await prisma.product.findMany({
+            where: { id: { in: idler }, isActive: true },
+            select: { id: true, price: true },
+        });
+        const fiyat = new Map(urunler.map((u) => [u.id, u.price]));
+        if (idler.some((id) => !fiyat.has(id))) {
+            return NextResponse.json({ error: 'Sepetteki bazı ürünler artık satışta değil. Lütfen sepetinizi yenileyin.' }, { status: 409 });
+        }
+        const araToplam = satirlar.reduce((t, x) => t + (fiyat.get(x.productId) as number) * x.quantity, 0);
+        const indirimOrani = DISCOUNT_CODES[discountCode] ?? 0;
+        const sunucuToplami = kurus(araToplam * (1 - indirimOrani));
+        if (Math.abs(sunucuToplami - totalAmount) > 0.01) {
+            return NextResponse.json({ error: 'Fiyatlar güncellenmiş. Lütfen sepetinizi yenileyip tekrar deneyin.' }, { status: 409 });
+        }
+
+        // Kişisel veriler (ad, telefon, adres) loglara yazılmaz.
+        console.log('Order request:', { items: satirlar.length, total: sunucuToplami, receipt: !!receiptFile?.size });
+
+        let receiptPath: string | null = null;
+
+        // Dekont: Cloudflare edge ortamında dosya sistemi yoktur; dosya veritabanına
+        // data URL (base64) olarak yazılır.
+        if (receiptFile && receiptFile.size > 0) {
+            const bytes = new Uint8Array(await receiptFile.arrayBuffer());
+            let ikili = '';
+            for (let i = 0; i < bytes.length; i += 0x8000) {
+                ikili += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+            }
+            receiptPath = `data:${receiptFile.type};base64,${btoa(ikili)}`;
         }
 
         // Create Order in DB
@@ -95,14 +116,14 @@ export async function POST(request: Request) {
                     address: address || '',
                     city: city || '',
                     district: district || '',
-                    totalAmount,
+                    totalAmount: sunucuToplami,
                     receiptPath,
                     status: 'PENDING',
                     items: {
-                        create: items.map((item: any) => ({
-                            productId: item.productId,
-                            quantity: item.quantity,
-                            price: item.price
+                        create: satirlar.map((x) => ({
+                            productId: x.productId,
+                            quantity: x.quantity,
+                            price: fiyat.get(x.productId) as number,
                         }))
                     }
                 }
@@ -119,10 +140,12 @@ export async function POST(request: Request) {
 
     } catch (error) {
         console.error('Order Error Details:', error);
+        const gelistirme = process.env.NODE_ENV === 'development';
         return NextResponse.json({
             error: 'Sipariş oluşturulurken bir hata oluştu',
-            details: error instanceof Error ? error.message : String(error),
-            stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined
+            // iç ayrıntılar yalnız geliştirmede gösterilir
+            details: gelistirme ? (error instanceof Error ? error.message : String(error)) : undefined,
+            stack: gelistirme ? (error instanceof Error ? error.stack : undefined) : undefined
         }, { status: 500 });
     }
 }

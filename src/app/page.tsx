@@ -1,18 +1,28 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
 import Cart from '@/components/Cart';
 import Footer from '@/components/Footer';
 import Logo from '@/components/Logo';
-import { Product, CartItem } from '@/lib/types';
+import { Product } from '@/lib/types';
+import { useCart } from '@/lib/useCart';
 import { initialProducts } from '@/lib/initialData';
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const {
+    cartItems,
+    isCartOpen,
+    openCart,
+    closeCart,
+    addToCart: handleAddToCart,
+    updateQuantity: handleUpdateQuantity,
+    removeFromCart: handleRemoveFromCart,
+    clearCart: handleClearCart,
+  } = useCart();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,7 +32,7 @@ export default function Home() {
       try {
         const res = await fetch('/api/products');
         if (res.ok) {
-          const data = await res.json();
+          const data = (await res.json()) as Product[];
           if (data.length > 0) {
             setProducts(data);
           } else {
@@ -49,52 +59,7 @@ export default function Home() {
     };
 
     loadProducts();
-
-    // Load cart from localStorage
-    const savedCart = localStorage.getItem('hur-ma-cart');
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
-    }
   }, []);
-
-  // Save cart to localStorage
-  useEffect(() => {
-    localStorage.setItem('hur-ma-cart', JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  const handleAddToCart = (product: Product, quantity: number) => {
-    setCartItems((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
-          item.product.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
-      }
-      return [...prev, { product, quantity }];
-    });
-  };
-
-  const handleUpdateQuantity = (productId: string, quantity: number) => {
-    if (quantity <= 0) {
-      handleRemoveFromCart(productId);
-      return;
-    }
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.product.id === productId ? { ...item, quantity } : item
-      )
-    );
-  };
-
-  const handleRemoveFromCart = (productId: string) => {
-    setCartItems((prev) => prev.filter((item) => item.product.id !== productId));
-  };
-
-  const handleClearCart = () => {
-    setCartItems([]);
-  };
 
   const getCartQuantity = (productId: string) => {
     const item = cartItems.find((item) => item.product.id === productId);
@@ -124,10 +89,10 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
-      <Header cartItems={cartItems} onCartClick={() => setIsCartOpen(true)} />
+      <Header cartItems={cartItems} onCartClick={() => openCart()} />
       <Cart
         isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
+        onClose={() => closeCart()}
         items={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemove={handleRemoveFromCart}
@@ -297,6 +262,32 @@ export default function Home() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Game Teaser */}
+      <section className="py-16 sm:py-20 bg-[#070b18] text-white relative overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-center">
+          <Link href="/oyun" className="block rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 hover:ring-[#D4A574]/60 transition">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/fesile/og-gorsel.jpg" alt="Fesîle oyunundan bir sahne: gece gökyüzü altında hurma ağacı" className="w-full h-auto block" loading="lazy" />
+          </Link>
+          <div>
+            <p className="text-xs tracking-[0.25em] uppercase text-[#D4A574] mb-3">Yeni · Yedi sahne</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+              Fesîle — Hurmanın Yaratılışı
+            </h2>
+            <p className="text-[#E8C9A8] mb-8 leading-relaxed">
+              Çekirdekten köke, kökten salkıma… Hurmanın yolculuğunu yalnızca fareyi gezdirerek
+              ya da parmağını sürükleyerek izleyeceğin kısa bir tefekkür oyunu.
+            </p>
+            <Link href="/oyun" className="btn-primary text-lg">
+              Oyunu Oyna
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
