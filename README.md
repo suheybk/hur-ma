@@ -59,17 +59,29 @@ hur-ma/
 ## 🔐 Admin Paneli
 
 - URL: `/admin`
-- Varsayılan Şifre: `hurma2024`
+- Varsayılan şifre **yoktur**. Şifre ortam değişkeninde, özet (hash) olarak tutulur:
 
-**Önemli**: Production'da şifreyi değiştirin!
+```bash
+npm run admin:sifre -- "yeni-şifreniz"
+```
+
+Komutun yazdığı iki satırı (`ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET`) yerelde
+`.env.local` dosyasına, canlıda Vercel → Settings → Environment Variables'a ekleyin.
+Bu değerler yoksa admin girişi kapalıdır.
+
+- Giriş başarılı olunca 8 saat geçerli, imzalı, `httpOnly` bir oturum çerezi verilir.
+- `/api/admin/*` uçları her istekte bu çerezi sunucuda doğrular; ürün ekleme / düzenleme /
+  silme yalnızca giriş yapmış admin ile mümkündür.
+- 15 dakikada 10 hatalı denemeden sonra giriş geçici olarak engellenir.
 
 ## ⚙️ Ortam Değişkenleri
 
-`.env` dosyasını düzenleyin:
+Örnek için `.env.example` dosyasına bakın:
 
 ```env
-DATABASE_URL="file:./dev.db"
-NEXT_PUBLIC_WHATSAPP="+905334862899"
+DATABASE_URL="postgresql://..."
+ADMIN_PASSWORD_HASH=scrypt:...
+ADMIN_SESSION_SECRET=...
 ```
 
 ## 📱 WhatsApp Entegrasyonu

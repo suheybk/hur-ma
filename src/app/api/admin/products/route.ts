@@ -1,7 +1,13 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/adminAuth';
+import { urunVerisi } from '@/lib/productValidation';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
+  const yetkisiz = await requireAdmin();
+  if (yetkisiz) return yetkisiz;
   try {
     const products = await prisma.product.findMany({
       orderBy: { order: 'asc' },
@@ -9,25 +15,17 @@ export async function GET() {
     return NextResponse.json(products);
   } catch (error) {
     console.error('Error fetching products:', error);
-    return NextResponse.json([], { status: 200 });
+    return NextResponse.json({ error: 'Ürünler alınamadı (veritabanı)' }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
+  const yetkisiz = await requireAdmin();
+  if (yetkisiz) return yetkisiz;
   try {
-    const body = await request.json();
-    const product = await prisma.product.create({
-      data: {
-        name: body.name,
-        description: body.description || null,
-        price: body.price,
-        unit: body.unit || 'KG',
-        category: body.category || 'klasik',
-        image: body.image || null,
-        isActive: body.isActive ?? true,
-        order: body.order || 0,
-      },
-    });
+    const v = urunVerisi(await request.json().catch(() => null));
+    if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 });
+    const product = await prisma.product.create({ data: v.data });
     return NextResponse.json(product, { status: 201 });
   } catch (error) {
     console.error('Error creating product:', error);

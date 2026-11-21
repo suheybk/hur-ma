@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import Logo from '@/components/Logo';
 import { Product } from '@/lib/types';
 
@@ -33,44 +34,81 @@ export default function AdminPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  useEffect(() => {
-    const token = localStorage.getItem('hur-ma-admin');
-    if (token === 'authenticated') {
-      setIsLoggedIn(true);
-      loadProducts();
-    }
+  const [authChecked, setAuthChecked] = useState(false);
+
+  // Oturum süresi dolduysa / çerez geçersizse giriş ekranına dön
+  const oturumDustu = useCallback(() => {
+    setIsLoggedIn(false);
+    setProducts([]);
+    setMessage({ type: 'error', text: 'Oturum süresi doldu, lütfen tekrar giriş yapın.' });
   }, []);
 
-  const loadProducts = async () => {
+  const loadProducts = useCallback(async () => {
     setIsLoading(true);
     try {
-      const res = await fetch('/api/admin/products');
-      if (res.ok) {
-        const data = await res.json();
-        setProducts(data);
-      }
+      const res = await fetch('/api/admin/products', { cache: 'no-store' });
+      if (res.status === 401) return oturumDustu();
+      const data = await res.json();
+      if (res.ok) setProducts(data);
+      else setMessage({ type: 'error', text: data?.error || 'Ürünler yüklenemedi' });
     } catch (error) {
       console.error('Error loading products:', error);
+      setMessage({ type: 'error', text: 'Ürünler yüklenemedi' });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [oturumDustu]);
+
+  // Açılışta sunucuya oturum var mı diye sor (şifre artık tarayıcıda tutulmuyor)
+  useEffect(() => {
+    let iptal = false;
+    fetch('/api/admin/session', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then((d) => {
+        if (iptal) return;
+        if (d.authenticated) {
+          setIsLoggedIn(true);
+          loadProducts();
+        } else if (!d.configured) {
+          setMessage({ type: 'error', text: 'Admin girişi sunucuda yapılandırılmamış (ADMIN_PASSWORD_HASH / ADMIN_SESSION_SECRET).' });
+        }
+      })
+      .catch(() => {})
+      .finally(() => !iptal && setAuthChecked(true));
+    return () => {
+      iptal = true;
+    };
+  }, [loadProducts]);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage({ type: '', text: '' });
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        setPassword('');
+        setIsLoggedIn(true);
+        loadProducts();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setMessage({ type: 'error', text: data?.error || 'Giriş başarısız' });
+      }
+    } catch {
+      setMessage({ type: 'error', text: 'Sunucuya ulaşılamadı' });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simple password check - in production use proper auth
-    if (password === 'hurma2024') {
-      localStorage.setItem('hur-ma-admin', 'authenticated');
-      setIsLoggedIn(true);
-      loadProducts();
-    } else {
-      setMessage({ type: 'error', text: 'Yanlış şifre!' });
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('hur-ma-admin');
+  const handleLogout = async () => {
+    await fetch('/api/admin/logout', { method: 'POST' }).catch(() => {});
     setIsLoggedIn(false);
+    setProducts([]);
     setPassword('');
   };
 
@@ -91,12 +129,14 @@ export default function AdminPage() {
         body: JSON.stringify(editingProduct),
       });
 
+      if (res.status === 401) return oturumDustu();
       if (res.ok) {
         setMessage({ type: 'success', text: 'Ürün kaydedildi!' });
         setEditingProduct(null);
         loadProducts();
       } else {
-        setMessage({ type: 'error', text: 'Hata oluştu!' });
+        const data = await res.json().catch(() => ({}));
+        setMessage({ type: 'error', text: data?.error || 'Hata oluştu!' });
       }
     } catch (error) {
       console.error('Error saving product:', error);
@@ -112,6 +152,7 @@ export default function AdminPage() {
     setIsLoading(true);
     try {
       const res = await fetch(`/api/admin/products/${id}`, { method: 'DELETE' });
+      if (res.status === 401) return oturumDustu();
       if (res.ok) {
         setMessage({ type: 'success', text: 'Ürün silindi!' });
         loadProducts();
@@ -132,6 +173,10 @@ export default function AdminPage() {
   ];
 
   const units = ['KG', 'PAKET', 'ADET'];
+
+  if (!authChecked) {
+    return <div className="min-h-screen bg-[#FDF8F3]" />;
+  }
 
   if (!isLoggedIn) {
     return (
@@ -164,14 +209,14 @@ export default function AdminPage() {
                 required
               />
             </div>
-            <button type="submit" className="btn-primary w-full justify-center">
-              Giriş Yap
+            <button type="submit" disabled={isLoading} className="btn-primary w-full justify-center disabled:opacity-60">
+              {isLoading ? 'Kontrol ediliyor…' : 'Giriş Yap'}
             </button>
           </form>
           
-          <a href="/" className="block text-center mt-4 text-[#D4A574] hover:text-[#B8956A]">
+          <Link href="/" className="block text-center mt-4 text-[#D4A574] hover:text-[#B8956A]">
             ← Siteye Dön
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -187,9 +232,9 @@ export default function AdminPage() {
             <span className="text-[#6B5344]">Admin Panel</span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="/" className="text-[#D4A574] hover:text-[#B8956A]">
+            <Link href="/" className="text-[#D4A574] hover:text-[#B8956A]">
               Siteyi Görüntüle
-            </a>
+            </Link>
             <button onClick={handleLogout} className="btn-secondary text-sm py-2 px-4">
               Çıkış
             </button>

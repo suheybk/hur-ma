@@ -15,6 +15,7 @@ interface HeaderProps {
 const navLinks = [
   { href: '/', label: 'Ana Sayfa' },
   { href: '/#urunler', label: 'Ürünler' },
+  { href: '/oyun', label: 'Oyun' },
   { href: '/hakkimizda', label: 'Hakkımızda' },
   { href: '/iletisim', label: 'İletişim' },
   { href: '/sss', label: 'SSS' },

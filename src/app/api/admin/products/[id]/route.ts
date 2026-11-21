@@ -1,10 +1,16 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/adminAuth';
+import { urunVerisi } from '@/lib/productValidation';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const yetkisiz = await requireAdmin();
+  if (yetkisiz) return yetkisiz;
   try {
     const { id } = await params;
     const product = await prisma.product.findUnique({
@@ -24,22 +30,13 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const yetkisiz = await requireAdmin();
+  if (yetkisiz) return yetkisiz;
   try {
     const { id } = await params;
-    const body = await request.json();
-    const product = await prisma.product.update({
-      where: { id },
-      data: {
-        name: body.name,
-        description: body.description || null,
-        price: body.price,
-        unit: body.unit || 'KG',
-        category: body.category || 'klasik',
-        image: body.image || null,
-        isActive: body.isActive ?? true,
-        order: body.order || 0,
-      },
-    });
+    const v = urunVerisi(await request.json().catch(() => null));
+    if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 });
+    const product = await prisma.product.update({ where: { id }, data: v.data });
     return NextResponse.json(product);
   } catch (error) {
     console.error('Error updating product:', error);
@@ -51,6 +48,8 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const yetkisiz = await requireAdmin();
+  if (yetkisiz) return yetkisiz;
   try {
     const { id } = await params;
     await prisma.product.delete({

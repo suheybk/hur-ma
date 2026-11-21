@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Fesîle — Hurmanın Yaratılışı</title>
+  <meta name="description" content="Hurmanın yaratılışı, yedi sahnede. Yalnızca fare hareketiyle oynanan kısa bir tefekkür filmi." />
+  <meta name="theme-color" content="#070b18" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Fesîle — Hurmanın Yaratılışı" />
+  <meta property="og:description" content="Hurmanın yaratılışı, yedi sahnede. Yalnızca fare hareketiyle oynanır." />
+  <meta property="og:image" content="og-gorsel.jpg" />
+  <meta property="og:locale" content="tr_TR" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23070b18'/%3E%3Cpath d='M20 5a11 11 0 1 0 0 22a9 11 0 1 1 0-22z' fill='%23f1dfae'/%3E%3C/svg%3E" />
+  <script type="module" crossorigin src="./assets/index-0-52_8Ea.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-mMhDyxT0.css">
+</head>
+<body>
+  <canvas id="sahne" aria-label="Oyun sahnesi"></canvas>
+
+  <div id="yukleme" aria-live="polite"><div class="hilal-yukle" aria-hidden="true"></div><span>Hazırlanıyor</span></div>
+
+  <div id="imlec" aria-hidden="true"></div>
+
+  <section id="acilis" class="gizli" aria-labelledby="acilis-baslik">
+    <p class="ust-yazi">Hurma · Yedi sahne</p>
+    <h1 id="acilis-baslik" class="dev">Fesîle</h1>
+    <p class="alt-yazi">Hurmanın yaratılışı. Yedi sahnede.</p>
+    <button id="basla" class="dugme ana">Başla</button>
+    <p class="not-yazi">Yalnızca fareyi gezdirmen yeter. Telefonda parmağını sürükle.</p>
+  </section>
+
+  <div id="baslik" aria-live="polite">
+    <div class="no"></div>
+    <div class="ad"></div>
+    <div class="alt"></div>
+    <div class="satir"></div>
+  </div>
+
+  <div id="etiketler" aria-hidden="true"><svg id="etiket-cizgi"></svg></div>
+
+  <div id="ipucu" aria-live="polite"></div>
+
+  <div id="ilerleme" aria-hidden="true"><i></i></div>
+
+  <nav id="ray" class="gizli" aria-label="Bölümler"></nav>
+
+  <div id="kose" class="gizli">
+    <button id="ses-dugme" class="kose-dugme" aria-label="Sesi kapat" title="Ses"></button>
+    <button id="defter-dugme" class="kose-dugme" aria-label="Defteri aç" title="Defter"></button>
+    <button id="tam-dugme" class="kose-dugme" aria-label="Tam ekran" title="Tam ekran"></button>
+  </div>
+
+  <div id="sakin-satir" aria-live="polite"></div>
+
+  <div id="kart" class="gizli" role="dialog" aria-modal="true" aria-labelledby="kart-ust">
+    <div class="kart-ic">
+      <div id="kart-ust" class="kart-ust"></div>
+      <div class="kart-metinler"></div>
+      <p class="kart-bag"></p>
+      <button id="kart-devam" class="dugme">Devam</button>
+    </div>
+  </div>
+
+  <section id="bitis" class="gizli" aria-label="Bitiş">
+    <p class="bitis-yazi">Gece bahçesi. Fareyi gezdir; rüzgâr sensin.</p>
+    <div class="bitis-dugmeler">
+      <button id="bastan" class="dugme">Baştan oyna</button>
+      <button id="bitis-defter" class="dugme ikincil">Defter</button>
+    </div>
+  </section>
+
+  <aside id="defter" class="gizli" role="dialog" aria-modal="true" aria-label="Defter">
+    <div class="defter-ic">
+      <header>
+        <h2>Defter</h2>
+        <button id="defter-kapat" class="dugme ikincil kucuk" aria-label="Defteri kapat">Kapat</button>
+      </header>
+      <div class="sekmeler" role="tablist">
+        <button role="tab" data-sekme="kartlar" aria-selected="true">Kartlar</button>
+        <button role="tab" data-sekme="sozluk" aria-selected="false">Sözlük</button>
+        <button role="tab" data-sekme="turler" aria-selected="false">Medine hurmaları</button>
+      </div>
+      <div class="defter-govde"></div>
+    </div>
+  </aside>
+
+  <div id="yedek" class="gizli">
+    <div class="yedek-hilal" aria-hidden="true"></div>
+    <h1>Fesîle</h1>
+    <p>Hurmanın yaratılışı. Yedi sahnede.</p>
+    <p class="kucuk">Bu deneyim için WebGL desteği gerekiyor. Tarayıcın ya da cihazın şu an bunu sağlamıyor.
+      Güncel bir tarayıcıyla ya da başka bir cihazla yeniden deneyebilirsin.</p>
+  </div>
+
+  <noscript><p style="color:#eee;font:16px sans-serif;padding:2rem">Fesîle için JavaScript gerekiyor.</p></noscript>
+</body>
+</html>

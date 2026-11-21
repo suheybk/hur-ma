@@ -132,7 +132,7 @@ export const initialProducts = [
     description: "Pratik tüketim için çekirdeksiz hurma. Tatlı yapımı ve atıştırmalık olarak ideal.",
     price: 700,
     unit: "KG",
-    category: "özel",
+    category: "ozel",
     order: 17
   },
   {
@@ -140,7 +140,7 @@ export const initialProducts = [
     description: "İçi badem dolgulu, dışı çikolata kaplı premium hurma. Özel günler için mükemmel bir ikram.",
     price: 700,
     unit: "KG",
-    category: "özel",
+    category: "ozel",
     order: 18
   },
   {
@@ -164,7 +164,7 @@ export const initialProducts = [
     description: "Saf hurma özütünden yapılmış doğal macun. Kahvaltılarda ve tatlılarda kullanılabilir.",
     price: 350,
     unit: "KG",
-    category: "özel",
+    category: "ozel",
     order: 21
   },
   {

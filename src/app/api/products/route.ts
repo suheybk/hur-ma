@@ -14,24 +14,4 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const product = await prisma.product.create({
-      data: {
-        name: body.name,
-        description: body.description,
-        price: body.price,
-        unit: body.unit || 'KG',
-        category: body.category || 'hurma',
-        image: body.image,
-        isActive: body.isActive ?? true,
-        order: body.order || 0,
-      },
-    });
-    return NextResponse.json(product, { status: 201 });
-  } catch (error) {
-    console.error('Error creating product:', error);
-    return NextResponse.json({ error: 'Failed to create product' }, { status: 500 });
-  }
-}
+// Ürün ekleme yalnız /api/admin/products üzerinden, giriş yapmış admin ile yapılır.

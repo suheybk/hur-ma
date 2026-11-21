@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { CartItem } from '@/lib/types';
+import Cart from '@/components/Cart';
+import { useCart } from '@/lib/useCart';
 
 export default function IletisimPage() {
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const cart = useCart();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -16,12 +17,6 @@ export default function IletisimPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
-    useEffect(() => {
-        const savedCart = localStorage.getItem('hur-ma-cart');
-        if (savedCart) {
-            setCartItems(JSON.parse(savedCart));
-        }
-    }, []);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -47,7 +42,15 @@ ${formData.message}`;
 
     return (
         <main className="min-h-screen bg-[#FDF8F3]">
-            <Header cartItems={cartItems} onCartClick={() => { }} />
+            <Header cartItems={cart.cartItems} onCartClick={cart.openCart} />
+            <Cart
+                isOpen={cart.isCartOpen}
+                onClose={cart.closeCart}
+                items={cart.cartItems}
+                onUpdateQuantity={cart.updateQuantity}
+                onRemove={cart.removeFromCart}
+                onClear={cart.clearCart}
+            />
 
             {/* Hero */}
             <section className="pt-32 pb-16 px-4 bg-gradient-to-br from-[#2C1810] to-[#4A3728] text-white">

@@ -5,7 +5,8 @@ import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Cart from '@/components/Cart';
-import { Product, CartItem } from '@/lib/types';
+import { Product } from '@/lib/types';
+import { useCart } from '@/lib/useCart';
 import Link from 'next/link';
 
 export default function UrunDetayPage() {
@@ -13,20 +14,8 @@ export default function UrunDetayPage() {
     const [product, setProduct] = useState<Product | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
-    const [isCartOpen, setIsCartOpen] = useState(false);
+    const { cartItems, isCartOpen, openCart, closeCart, addToCart, updateQuantity, removeFromCart, clearCart } = useCart();
     const [isAdded, setIsAdded] = useState(false);
-
-    useEffect(() => {
-        const savedCart = localStorage.getItem('hur-ma-cart');
-        if (savedCart) {
-            setCartItems(JSON.parse(savedCart));
-        }
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem('hur-ma-cart', JSON.stringify(cartItems));
-    }, [cartItems]);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -52,36 +41,10 @@ export default function UrunDetayPage() {
     const handleAddToCart = () => {
         if (!product) return;
 
-        setCartItems((prev) => {
-            const existing = prev.find((item) => item.product.id === product.id);
-            if (existing) {
-                return prev.map((item) =>
-                    item.product.id === product.id
-                        ? { ...item, quantity: item.quantity + quantity }
-                        : item
-                );
-            }
-            return [...prev, { product, quantity }];
-        });
+        addToCart(product, quantity);
 
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 2000);
-    };
-
-    const handleUpdateQuantity = (productId: string, qty: number) => {
-        if (qty <= 0) {
-            setCartItems((prev) => prev.filter((item) => item.product.id !== productId));
-            return;
-        }
-        setCartItems((prev) =>
-            prev.map((item) =>
-                item.product.id === productId ? { ...item, quantity: qty } : item
-            )
-        );
-    };
-
-    const handleRemoveFromCart = (productId: string) => {
-        setCartItems((prev) => prev.filter((item) => item.product.id !== productId));
     };
 
     const getCategoryBadge = (category: string) => {
@@ -98,7 +61,7 @@ export default function UrunDetayPage() {
     if (isLoading) {
         return (
             <main className="min-h-screen bg-[#FDF8F3]">
-                <Header cartItems={cartItems} onCartClick={() => setIsCartOpen(true)} />
+                <Header cartItems={cartItems} onCartClick={() => openCart()} />
                 <div className="pt-32 pb-16 px-4">
                     <div className="max-w-4xl mx-auto">
                         <div className="animate-pulse">
@@ -116,7 +79,7 @@ export default function UrunDetayPage() {
     if (!product) {
         return (
             <main className="min-h-screen bg-[#FDF8F3]">
-                <Header cartItems={cartItems} onCartClick={() => setIsCartOpen(true)} />
+                <Header cartItems={cartItems} onCartClick={() => openCart()} />
                 <div className="pt-32 pb-16 px-4">
                     <div className="max-w-4xl mx-auto text-center">
                         <div className="text-6xl mb-4">🌴</div>
@@ -136,14 +99,14 @@ export default function UrunDetayPage() {
 
     return (
         <main className="min-h-screen bg-[#FDF8F3]">
-            <Header cartItems={cartItems} onCartClick={() => setIsCartOpen(true)} />
+            <Header cartItems={cartItems} onCartClick={() => openCart()} />
             <Cart
                 isOpen={isCartOpen}
-                onClose={() => setIsCartOpen(false)}
+                onClose={() => closeCart()}
                 items={cartItems}
-                onUpdateQuantity={handleUpdateQuantity}
-                onRemove={handleRemoveFromCart}
-                onClear={() => setCartItems([])}
+                onUpdateQuantity={updateQuantity}
+                onRemove={removeFromCart}
+                onClear={clearCart}
             />
 
             {/* Breadcrumb */}
