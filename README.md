@@ -112,16 +112,28 @@ Toplam: 2.750 TL
 
 ## 🚀 Production Deploy
 
-### Vercel (Önerilen)
+Site **Cloudflare Pages** üzerinde çalışır; veritabanı Cloudflare **D1**'dir (`wrangler.toml`).
+
+### Cloudflare Pages (Git bağlantısıyla)
+Cloudflare Pages projesinin derleme ayarları:
+
+- Build command: `npx @cloudflare/next-on-pages`
+- Build output directory: `.vercel/output/static`
+- Compatibility flag: `nodejs_compat`
+- D1 binding: `DB` → `hur-ma-db`
+- Secrets: `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET`
+
+> Not: `.vercel/output` klasörü ve `vercel` paketi Cloudflare'in `next-on-pages` aracının
+> kendi çıktı biçimidir; Vercel hesabı ya da bağlantısı gerektirmez.
+
+### Elle yayın (Wrangler)
 ```bash
-npm install -g vercel
-vercel
+npm run pages:deploy
 ```
 
-### Manual Build
+### Veritabanı (D1) migration
 ```bash
-npm run build
-npm start
+npx wrangler d1 migrations apply hur-ma-db --remote
 ```
 
 ## 📝 Notlar
